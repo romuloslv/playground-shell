@@ -42,4 +42,4 @@ function coffee() {
     tput cvvis
 }
 
-1$ & coffee $!
+$1 & coffee $!
