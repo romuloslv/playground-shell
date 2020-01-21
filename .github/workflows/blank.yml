@@ -16,5 +16,7 @@ jobs:
         echo Add other actions to build,
         echo test, and deploy your project.
     - name: test script
-      run: pwd && ls -lha
-      run: bash coffee.sh "sleep 3"
+      run: |
+        pwd && ls -lha
+        docker --version
+        #bash coffee.sh "sleep 3"
