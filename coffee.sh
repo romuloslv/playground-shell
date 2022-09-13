@@ -1,3 +1,5 @@
+#!/usr/bin/env bash
+
 IMGS=(
 "
    ( (     \n\
@@ -18,11 +20,11 @@ IMGS=(
 IMG_REFRESH="0.5"
 LINES_PER_IMG=$(( $(echo $IMGS[0] | sed 's/\\n/\n/g' | wc -l) + 1 ))
 
-function tput_loop() { 
+function tput_loop() {
     for((x=0; x < $LINES_PER_IMG; x++))
     do
         tput $1
-    done 
+    done
 }
 
 function coffee() {
@@ -42,4 +44,16 @@ function coffee() {
     tput cvvis
 }
 
-$1 & coffee $!
+initial() {
+  case $1 in
+    "")
+      echo "Usage: bash coofee \"sleep 10\""
+      exit 1
+      ;;
+    *)
+      $1 & coffee $!
+      ;;
+  esac
+}
+
+initial "$1"
