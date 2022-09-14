@@ -44,10 +44,10 @@ function coffee() {
     tput cvvis
 }
 
-initial() {
+function initial() {
   case $1 in
     "")
-      echo "Usage: bash coofee \"sleep 10\""
+      echo "Usage: ./coofee.sh \"sleep 10\""
       exit 1
       ;;
     *)
