@@ -27,7 +27,6 @@ function tput_loop() {
 }
 
 function coffee() {
-    echo -e "\nAs promised, here is your coffee and your next information.\nTip: /opt/bert.rb"
     local pid=$1
     IFS='%'
     tput civis # hide cursor
