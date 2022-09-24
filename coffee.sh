@@ -3,22 +3,23 @@
 IMGS1="\n    ( ( \n     ) ) \n .......... \n |        |]\n \        / \n  -------- \n\n"
 IMGS2="\n     ) ) \n    ( ( \n .......... \n |        |]\n \        / \n  -------- \n\n"
 
-tput_loop() { 
+tput_loop() {
     x=0
     while [ $x -lt 8 ]; do
-        tput $1
-        x=$(( x + 1 ))
-    done 
+      tput $1
+      x=$(( x + 1 ))
+    done
 }
 
 coffee() {
+    echo "\nAs promised, here is your coffee and your next information.\nTip: /opt/bert.rb"
     IFS='%'
     tput civis
-    while [ "$(ps a | awk '{print $1}' | grep $1)" ]; do
-      echo -ne $IMGS1
+    while [ $(ps a | awk '{print $1}' | grep $1) ]; do
+      echo -n $IMGS1
       tput_loop "cuu1"
       sleep 0.5
-      echo -ne $IMGS2
+      echo -n "$IMGS2"
       tput_loop "cuu1"
       sleep 0.5
     done
