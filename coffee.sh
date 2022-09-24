@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/ash
 
 IMGS1="\n    ( ( \n     ) ) \n .......... \n |        |]\n \        / \n  -------- \n\n"
 IMGS2="\n     ) ) \n    ( ( \n .......... \n |        |]\n \        / \n  -------- \n\n"
@@ -15,10 +15,10 @@ coffee() {
     IFS='%'
     tput civis
     while [ $(ps a | awk '{print $1}' | grep $1) ]; do
-      echo -n $IMGS1
+      echo -ne $IMGS1
       tput_loop "cuu1"
       sleep 0.5
-      echo -n "$IMGS2"
+      echo -ne "$IMGS2"
       tput_loop "cuu1"
       sleep 0.5
     done
