@@ -12,7 +12,6 @@ function tput_loop() {
 }
 
 function coffee() {
-    echo -e "\nAs promised, here is your coffee and your next information.\nTip: /opt/bert.rb"
     IFS='%'
     tput civis
     while [ "$(ps a | awk '{print $1}' | grep $1)" ]; do
