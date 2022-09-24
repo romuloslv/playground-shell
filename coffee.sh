@@ -3,7 +3,7 @@
 IMGS1="\n    ( ( \n     ) ) \n .......... \n |        |]\n \        / \n  -------- \n\n"
 IMGS2="\n     ) ) \n    ( ( \n .......... \n |        |]\n \        / \n  -------- \n\n"
 
-function tput_loop() { 
+tput_loop() { 
     x=0
     while [ $x -lt 8 ]; do
         tput $1
@@ -11,7 +11,7 @@ function tput_loop() {
     done 
 }
 
-function coffee() {
+coffee() {
     IFS='%'
     tput civis
     while [ "$(ps a | awk '{print $1}' | grep $1)" ]; do
@@ -26,7 +26,7 @@ function coffee() {
     tput cvvis
 }
 
-function initial() {
+initial() {
   case $1 in
     "")
       echo 'Usage: ./coffee "sleep 10"'
