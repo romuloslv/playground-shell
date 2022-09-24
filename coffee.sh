@@ -1,53 +1,54 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 IMGS=(
 "
-   ( (     \n\
-    ) )    \n\
-  ........ \n\
-  |      |]\n\
-  \      / \n\
-   ------  \n
+      ) )   \n\
+     ( (    \n\
+      ) )   \n\
+  .......... \n\
+  |         |]\n\
+  \        / \n\
+   --------  \n
 " "
-   ) )     \n\
-    ( (    \n\
-  ........ \n\
-  |      |]\n\
-  \      / \n\
-   ------  \n
+      ( (    \n\
+       ) )     \n\
+      ( (    \n\
+  .......... \n\
+  |         |]\n\
+  \        / \n\
+   --------  \n
 " )
 
-IMG_REFRESH="0.5"
-LINES_PER_IMG=$(( $(echo $IMGS[0] | sed 's/\\n/\n/g' | wc -l) + 1 ))
-
 function tput_loop() {
-    for((x=0; x < $LINES_PER_IMG; x++))
+    for((x=0; x < 8; x++))
     do
         tput $1
     done
 }
 
 function coffee() {
+    echo -e "\nAs promised, here is your coffee and your next information.\nTip: /opt/bert.rb"
     local pid=$1
     IFS='%'
-    tput civis
+    tput civis # hide cursor
     while [ "$(ps a | awk '{print $1}' | grep $pid)" ]
     do
         for x in "${IMGS[@]}"
         do
             echo -ne $x
-            tput_loop "cuu1"
-            sleep $IMG_REFRESH
+            tput_loop "cuu1" # up one line
+            sleep 0.5
         done
     done
     tput_loop "cud1"
-    tput cvvis
+    tput cvvis # unhide cursor
+
 }
 
 function initial() {
   case $1 in
     "")
-      echo "Usage: ./coofee.sh \"sleep 10\""
+      echo 'Usage: ./coffee "sleep 10"'
       exit 1
       ;;
     *)
