@@ -1,44 +1,27 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-IMGS=(
-"
-   ( (     \n\
-    ) )    \n\
-  ........ \n\
-  |      |]\n\
-  \      / \n\
-   ------  \n
-" "
-   ) )     \n\
-    ( (    \n\
-  ........ \n\
-  |      |]\n\
-  \      / \n\
-   ------  \n
-" )
+IMGS1="\n    ( ( \n     ) ) \n .......... \n |        |]\n \        / \n  -------- \n\n"
+IMGS2="\n     ) ) \n    ( ( \n .......... \n |        |]\n \        / \n  -------- \n\n"
 
-IMG_REFRESH="0.5"
-LINES_PER_IMG=$(( $(echo $IMGS[0] | sed 's/\\n/\n/g' | wc -l) + 1 ))
-
-function tput_loop() {
-    for((x=0; x < $LINES_PER_IMG; x++))
-    do
+function tput_loop() { 
+    x=0
+    while [ $x -lt 8 ]; do
         tput $1
-    done
+        x=$(( x + 1 ))
+    done 
 }
 
 function coffee() {
-    local pid=$1
+    echo -e "\nAs promised, here is your coffee and your next information.\nTip: /opt/bert.rb"
     IFS='%'
     tput civis
-    while [ "$(ps a | awk '{print $1}' | grep $pid)" ]
-    do
-        for x in "${IMGS[@]}"
-        do
-            echo -ne $x
-            tput_loop "cuu1"
-            sleep $IMG_REFRESH
-        done
+    while [ "$(ps a | awk '{print $1}' | grep $1)" ]; do
+      echo -ne $IMGS1
+      tput_loop "cuu1"
+      sleep 0.5
+      echo -ne $IMGS2
+      tput_loop "cuu1"
+      sleep 0.5
     done
     tput_loop "cud1"
     tput cvvis
@@ -47,7 +30,7 @@ function coffee() {
 function initial() {
   case $1 in
     "")
-      echo "Usage: ./coofee.sh \"sleep 10\""
+      echo 'Usage: ./coffee "sleep 10"'
       exit 1
       ;;
     *)
