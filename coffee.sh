@@ -1,8 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 IMGS=(
 "
-      ) )   \n\
      ( (    \n\
       ) )   \n\
   .......... \n\
@@ -10,7 +9,6 @@ IMGS=(
   \        / \n\
    --------  \n
 " "
-      ( (    \n\
        ) )     \n\
       ( (    \n\
   .......... \n\
@@ -20,40 +18,36 @@ IMGS=(
 " )
 
 function tput_loop() {
-    for((x=0; x < 8; x++))
-    do
-        tput $1
-    done
+  x=0
+  while [ $x -lt 8 ]; do
+    tput $1
+    x=$(( x + 1 ))
+  done
 }
 
 function coffee() {
-    local pid=$1
-    IFS='%'
-    tput civis # hide cursor
-    while [ "$(ps a | awk '{print $1}' | grep $pid)" ]
+  IFS='%'
+  tput civis
+  while [ "$(ps a | awk '{print $1}' | grep $1)" ]
+  do
+    for x in "${IMGS[@]}"
     do
-        for x in "${IMGS[@]}"
-        do
-            echo -ne $x
-            tput_loop "cuu1" # up one line
-            sleep 0.5
-        done
+      echo -ne $x
+      tput_loop "cuu1"
+      sleep 0.5
     done
-    tput_loop "cud1"
-    tput cvvis # unhide cursor
-
+  done
+  tput_loop "cud1"
+  tput cvvis
 }
 
 function initial() {
-  case $1 in
-    "")
-      echo 'Usage: ./coffee "sleep 10"'
-      exit 1
-      ;;
-    *)
-      $1 & coffee $!
-      ;;
-  esac
+  if [[ "$1" =~ ^sleep\ [0-9]+$ ]]; then
+    $1 & coffee $!
+  else
+    echo 'Usage: ./coffee "sleep 10"'
+    exit 1
+  fi
 }
 
 initial "$1"
